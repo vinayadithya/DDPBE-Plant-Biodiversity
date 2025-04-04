@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Biodiversity Database of Eastern Ghats</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #e2ebe0; color: #1b1717;}
+        .header {
+            background: linear-gradient(to right, rgba(108, 209, 133, 0.849), rgba(47, 70, 48, 0.7)), url('happy.jpeg');
+            background-size: cover; background-position: center; color: rgb(248, 248, 248); text-align: center;
+            padding: 40px; font-size: 22px; font-weight: bold; position: relative; overflow: hidden;
+        }
+        .running-text-container { width: 100%; overflow: hidden; position: absolute; bottom: 5px; }
+        .running-text { white-space: nowrap; font-size: 16px; animation: runText 20s linear infinite; color: #fff; }
+        @keyframes runText { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+        .container { width: 80%; margin: auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        h1 { text-align: center; color: #2c6e49; }
+        .alphabet-index { text-align: center; margin-bottom: 20px; }
+        .alphabet-index a { margin: 0 8px; font-size: 18px; color: #2c6e49; font-weight: bold; text-decoration: none; cursor: pointer; }
+        .alphabet-index a:hover { color: #4caf50; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; }
+        th { background-color: #2c6e49; color: white; font-weight: bold; }
+        tr:nth-child(even) { background-color: rgba(76, 175, 80, 0.1); }
+        a { color: #4caf50; text-decoration: none; cursor: pointer; }
+        a:hover { text-decoration: underline; }
+        .footer { background: linear-gradient(to right, #4caf50, #2c6e49); color: white; text-align: center; padding: 15px; font-size: 16px; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); }
+        .modal-content { background-color: white; width: 75%; height: 75%; margin: 5% auto; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); overflow-y: auto; }
+        .close { float: right; font-size: 24px; font-weight: bold; cursor: pointer; }
+        .close:hover { color: red; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+         DDPBE-Development of a Database for the Plant Biodiversity of the Eastern Ghats 
+        <div class="running-text-container">
+            <div class="running-text">Plant Biodiversity Database of Eastern Ghats</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Species List</h1>
+<div class="search-container" style="text-align: center; margin-bottom: 20px;">
+    <input type="text" id="searchInput" placeholder="Search for a plant..." onkeyup="searchPlants()" 
+           style="width: 60%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+</div>
+
+
+        <div class="alphabet-index">
+            <span onclick="filterPlants('A')">A</span> | <span onclick="filterPlants('B')">B</span> | <span onclick="filterPlants('C')">C</span> | 
+            <span onclick="filterPlants('D')">D</span> | <span onclick="filterPlants('E')">E</span> | <span onclick="filterPlants('F')">F</span> | 
+            <span onclick="filterPlants('G')">G</span> | <span onclick="filterPlants('H')">H</span> | <span onclick="filterPlants('I')">I</span> | 
+            <span onclick="filterPlants('J')">J</span> | <span onclick="filterPlants('K')">K</span> | <span onclick="filterPlants('L')">L</span> | 
+            <span onclick="filterPlants('M')">M</span> | <span onclick="filterPlants('N')">N</span> | <span onclick="filterPlants('O')">O</span> | 
+            <span onclick="filterPlants('P')">P</span> | <span onclick="filterPlants('Q')">Q</span> | <span onclick="filterPlants('R')">R</span> | 
+            <span onclick="filterPlants('S')">S</span> | <span onclick="filterPlants('T')">T</span> | <span onclick="filterPlants('U')">U</span> | 
+            <span onclick="filterPlants('V')">V</span> | <span onclick="filterPlants('W')">W</span> | <span onclick="filterPlants('X')">X</span> | 
+            <span onclick="filterPlants('Y')">Y</span> | <span onclick="filterPlants('Z')">Z</span> | 
+            <strong onclick="resetFilter()" style="cursor: pointer;">A-Z</strong>
+        </div>
+
+        <table id="plantTable">
+            <thead>
+                <tr>
+                    <th>Plant Name</th>
+                    <th>Function</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-plant="A">
+                    <td>Aegle marmelos</td>
+                    <td><a href="#" onclick="openModal('Aegle marmelos')">View Details</a></td>
+                </tr>
+                <tr data-plant="A">
+                    <td>Andrographis paniculata</td>
+                    <td><a href="#" onclick="openModal('Andrographis paniculata')">View Details</a></td>
+                </tr>
+                <tr data-plant="A">
+                    <td>Asparagus racemous</td>
+                    <td><a href="#" onclick="openModal('Asparagus racemosus')">View Details</a></td>
+                </tr>
+                <tr data-plant="B">
+                    <td>Bacopa monnieri</td>
+                    <td><a href="#" onclick="openModal('Bacopa monnieri')">View Details</a></td>
+                </tr>
+                <tr data-plant="B">
+                    <td>Boerhavia diffusa</td>
+                    <td><a href="#" onclick="openModal('Boerhavia diffusa')">View Details</a></td>
+               </tr>
+               <tr data-plant="C">
+                   <td>Cassia fistula</td>
+                   <td><a href="#" onclick="openModal('Cassia fistula')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Centella asiatica</td>
+                    <td><a href="#" onclick="openModal('Centella asiatica')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Clerodendrum serratum</td>
+                    <td><a href="#" onclick="openModal('Clerodendrum serratum')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Cissus quadrangularis</td>
+                    <td><a href="#" onclick="openModal('Cissus quadrangularis')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Costus speciosus</td>
+                    <td><a href="#" onclick="openModal('Costus speciosus')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Curculigo orchioides</td>
+                    <td><a href="#" onclick="openModal('Curculigo orchioides')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Curcuma longa</td>
+                    <td><a href="#" onclick="openModal('Curcuma longa')">View Details</a></td>
+                </tr>
+                <tr data-plant="D">
+                    <td>Datura metel</td>
+                    <td><a href="#" onclick="openModal('Datura metel')">View Details</a></td>
+                </tr>
+                <tr data-plant="E">
+                    <td>Emblica officinalis</td>
+                    <td><a href="#" onclick="openModal('Emblica officinalis')">View Details</a></td>
+                </tr>
+                <tr data-plant="E">
+                    <td>Erythrina variegata</td>
+                    <td><a href="#" onclick="openModal('Erythrina variegata')">View Details</a></td>
+                </tr>
+                <tr data-plant="E">
+                    <td>Evolvulus alsinoides</td>
+                    <td><a href="#" onclick="openModal('Evolvulus alsinoides')">View Details</a></td>
+                </tr>
+                <tr data-plant="F">
+                    <td>Ficus religiosa</td>
+                    <td><a href="#" onclick="openModal('Ficus religiosa')">View Details</a></td>
+                </tr>
+                <tr data-plant="G">
+                    <td>Gymnema sylvestre</td>
+                    <td><a href="#" onclick="openModal('Gymnema sylvestre')">View Details</a></td>
+                </tr>
+                <tr data-plant="H">
+                    <td>Hemidesmus indicus</td>
+                    <td><a href="#" onclick="openModal('Hemidesmus indicus')">View Details</a></td>
+                </tr>
+                <tr data-plant="H">
+                    <td>Holarrhena antidysenterica</td>  
+                    <td><a href="#" onclick="openModal('Holarrhena antidysenterica')">View Details</a></td>
+                </tr>
+                <tr data-plant="J">
+                    <td>Justica adhatoda</td>
+                    <td><a href="#" onclick="openModal('Justica adhatoda')">View Details</a></td>
+                </tr>
+                <tr data-plant="L">
+                    <td>Litsea glutinosa</td>
+                    <td><a href="#" onclick="openModal('Litsea glutinosa')">View Details</a></td>
+                </tr>
+                <tr data-plant="M">
+                    <td>Moringa oleifera</td>
+                    <td><a href="#" onclick="openModal('Moringa oleifera')">View Details</a></td>
+                </tr>
+                <tr data-plant="M">
+                    <td>Mucuna pruriens</td>
+                    <td><a href="#" onclick="openModal('Mucuna pruriens')">View Details</a></td>
+                </tr>
+                <tr data-plant="N">
+                    <td>Nycthanthes arbor-tristis</td>
+                    <td><a href="#" onclick="openModal('Nycthanthes arbor-tristis')">View Details</a></td>
+                </tr>
+                <tr data-plant="O">
+                    <td>Ocimum sanctum</td>
+                    <td><a href="#" onclick="openModal('Ocimum sanctum')">View Details</a></td>
+                </tr>
+                <tr data-plant="P">
+                    <td>Phyllanthus amarus</td>
+                    <td><a href="#" onclick="openModal('Phyllanthus amarus')">View Details</td>
+                </tr>
+                <tr data-plant="P">
+                    <td>Piper longum</td>
+                    <td><a href="#" onclick="openModal('Piper longum')">View Details</a></td>
+                </tr>
+                <tr data-plant="P">
+                    <td>Plumbago zeylania</td>
+                    <td><a href="#" onclick="openModal('Plumbago longum')">View Details</a></td>
+                </tr>
+                <tr data-plant="P">
+                    <td>Pongamia pinnata</td>
+                    <td><a href="#" onclick="openModal('Pongamia pinnata')">View Details</a></td>
+                </tr>
+                <tr data-plant="P">
+                    <td>Pterocarpus santalinus</td>
+                    <td><a href="#" onclick="openModal('Pterocarpus santalinus')">View Details</a></td>
+                </tr>
+                <tr data-plant="R">
+                    <td>Rauvolfia serpentina</td>
+                    <td><a href="#" onclick="openModal('Rauvolfia serpentina')">View Details</a></td>
+                </tr>
+                <tr data-plant="R">
+                    <td>Rubia cordifolia</td>
+                    <td><a href="#" onclick="openModal('Rubia cordifolia')">View Detailss</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Saraca asoca</td>
+                    <td><a href="#" onclick="openModal('Saraca asoca')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Scoparia dulcis</td>
+                    <td><a href="#" onclick="openModal('Scoparia dulcis')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Senna alexandrina</td>
+                    <td><a href="#" onclick="openModal('Senna alexandrina')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Solanum nigrum</td>
+                    <td><a href="#" onclick="openModal('Solanum nigrum')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Terminalia arjuna</td>
+                    <td><a href="#" onclick="openModal('Terminalia arjuna')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Terminalia bellirica</td>
+                    <td><a href="#" onclick="openModal('Terminalia bellirica')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Terminalia chebula</td>
+                    <td><a href="#" onclick="openModal('Terminalia chebula')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Terminalia chebula</td>
+                    <td><a href="#" onclick="openModal('Terminalia chebula')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Tinospora cordifolia</td>
+                    <td><a href="#" onclick="openModal('Tinospora cordifolia')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Tribulus terrestris</td>
+                    <td><a href="#" onclick="openModal('Tribulus terrestris')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Trichopus zeylanicus</td>
+                    <td><a href="#" onclick="openModal('Trichopus zeylanicus')">View Details</a></td>
+                </tr>
+                <tr data-plant="V">
+                    <td>Vitex negundo</td>
+                    <td><a href="#" onclick="openModal('Vitex negundo')">View Details</a></td>
+                </tr>
+                <tr data-plant="W">
+                    <td>Withania somnifera</td>
+                    <td><a href="#" onclick="openModal('Withania somnifera')">View Details</a></td>
+                </tr>
+                <tr data-plant="Z">
+                    <td>Zanthoxylum rhetsa</td>
+                    <td><a href="#" onclick="openModal('Zanthoxylum rhetsa')">View Details</a></td>
+                </tr>
+                <tr data-plant="A">
+                    <td>Abutilon indicum</td>
+                    <td><a href="#" onclick="openModal('Abutilon indicum')">View Details</a></td>
+                </tr>
+                <tr data-plant="A">
+
+                    <td>Acorus calamus</td>
+                    <td><a href="#" onclick="openModal('Acorus calamus')">View Details</a></td>
+                </tr>
+                <tr data-plant="A">
+                    <td>Albizia lebbeck</td>
+                    <td><a href="#" onclick="openModal('Albizia lebbeck')">View Details</a></td>
+                </tr>
+                <tr data-plant="A">
+                    <td>Alstonia scholaris</td>
+                    <td><a href="#" onclick="openModal('Alstonia scholaris')">View Details</a></td>
+                </tr>
+                <tr data-plant="A">
+                    <td>Anogeissus latifolia</td>
+                    <td><a href="#" onclick="openModal('Anogeissus latifolia')">View Details</a></td>
+                </tr>
+                <tr data-plant="A">
+                    <td>Argyreia nervosa</td>
+                    <td><a href="#" onclick="openModal('Argyreia nervosa')">View Funtion</a></td>
+                </tr>
+                <tr data-plant="B">
+                    <td>Butea monosperma</td>
+                    <td><a href="#" onclick="openModal('Butea monosperma')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Caesalpinia bonduc</td>
+                    <td><a href="#" onclick="openModal('Caesalpinia bonduc')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Calotropis gigantea</td>
+                    <td><a href="#" onclick="openModal('Calotropis gigantea')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Cinnamomum tamala</td>
+                    <td><a href="#" onclick="openModal('Cinnamomum tamala')">View Detailss</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Cocculus hirsutus</td>
+                    <td><a href="#" onclick="openModal('cocculus hirsutus')">View Details</a></td>
+                </tr>
+                <tr data-plant="C">
+                    <td>Cryptolepis buchanani</td>
+                    <td><a href="#" onclick="openModal('Cryptolepis buchanani')">View Details</a></td>
+                </tr>
+                <tr data-plant="D">
+                    <td>Dalbergia latifolia</td>
+                    <td><a href="#" onclick="openModal('Dalbergia latifolia')">View Details</a></td>
+                </tr>
+                <tr data-plant="D">
+                    <td>Desmodium gangeticum</td>
+                    <td><a href="#" onclick="openModal('Desmodium gangeticum')">View Details</a></td>
+                </tr>
+                <tr data-plant="D">
+                    <td>Dioscorea bulbifera</td>
+                    <td><a href="#" onclick="openModal('Dioscorea bulbifera')">View Details</a></td>
+                </tr>
+                <tr data-plant="D">
+                    <td>Diospyros melanoxylon</td>
+                    <td><a href="#" onclick="openModal('Diospyros melanoxylon')">View Details</a></td>
+                </tr>
+                <tr data-plant="E">
+                    <td>Eclipta prostrata</td>
+                    <td><a href="#" onclick="openModal('Eclipta prostrata')">View Details</a></td>
+                </tr>
+                <tr data-plant="E">
+                    <td>Entada rheedii</td>
+                    <td><a href="#" onclick="openModal('Entada rheedii')">View Details</a></td>
+                </tr>
+                <tr data-plant="E">
+                    <td>Euphorbia hirta</td>
+                    <td><a href="#" onclick="openModal('Euphorbia hirta')">View Detailss</a></td>
+                </tr>
+                <tr data-plant="F">
+                    <td>Fumaria indica</td>
+                    <td><a href="#" onclick="openModal('Fumaria indica')">View Details</a></td>
+                </tbody>
+                <tr data-plant="G">
+                    <td>Gloriosa superba</td>
+                    <td><a href="#" onclick="openModal('Gloriosa superba')">View Details</a></td>
+                </tr>
+                <tr data-plant="G">
+                    <td>Grewia hirsuta</td>
+                    <td><a href="#" onclick="openModal('Grewia hirsuta')">View Details</a></td>
+                </tr>
+                <tr data-plant="H">
+                    <td>Hygrophila auriculata</td>
+                    <td><a href="#" onclick="openModal('Hygrophila auriculata')">View Details</a></td>
+                </tr>
+                <tr data-plant="I">
+                    <td>Indigofera tinctoria</td>
+                    <td><a href="#" onclick="openModal('Indigofera tinctoria')">View Details</a></td>
+                </tr>
+                <tr data-plant="I">
+                    <td>Ixora coccinea</td>
+                    <td><a href="#" onclick="openModal('Ixora coccinea')">View Details</a></td>
+                </tr>
+                <tr data-plant="J">
+                    <td>Jasminum sambac</td>
+                    <td><a href="#" onclick="openModal('Jasminum sambac')">View Details</a></td>
+                </tr>
+                <tr data-plant="L">
+                    <td>Lantana camara</td>
+                    <td><a href="#" onclick="openModal('Lantana camara')">View Details</a></td>
+                </tr>
+                <tr data-plant="L">
+                    <td>Leucas aspera</td>
+                    <td><a href="#" onclick="openModal('Leucas aspera')">View Details</a></td>
+                </tr>
+                <tr data-plant="M">
+                    <td>Madhuca longifolia</td>
+                    <td><a href="#" onclick="openModal('Madhuca longifolia')">View Details</a></td>
+                </tr>
+                <tr data-plant="M">
+                    <td>Marsilea minuta</td>
+                    <td><a href="#" onclick="openModal('Marsilea minuta')">View Details</a></td>
+                </tr>
+                <tr data-plant="M">
+                    <td>Mitragyna parvifolia</td>
+                    <td><a href="#" onclick="openModal('Mitragyna parvifolia')">View Details</a></td>
+                </tr>
+                <tr data-plant="O">
+                    <td>Oroxylum indicum</td>
+                    <td><a href="#" onclick="openModal('Oroxylum indicum')">View Details</a></td>
+                </tr>
+                <tr data-plant="P">
+                    <td>Pandanus odorifer</td>
+                    <td><a href="#" onclick="openModal('Pandanus odorifer')">View Details</a></td>
+                </tr>
+                <tr data-plant="P">
+                    <td>Passiflora foetida</td>
+                    <td><a href="#" onclick="openModal('Passiflora foetida')">View Details</a></td>
+                </tr>
+                <tr data-plant="P">
+                    <td>Pedalium murex</td>
+                    <td><a href="#" onclick="openModal('Pedalium murex')">View Details</a></td>
+                </tr>
+                <tr data-plant="P">
+                    <td>Pueraria tuberosa</td>
+                    <td><a href="#" onclick="openModal('Pueraria tuberosa')">View Details</a></td>
+                </tr>
+                <tr data-plant="Q">
+                    <td>Quisqualis indica</td>
+                    <td><a href="#" onclick="openModal('Quisqualis indica')">View Details</a></td>
+                </tr>
+                <tr data-plant="R">
+                    <td>Rhynchostylis retusa</td>
+                    <td><a href="#" onclick="openModal('Rhynchostylis retusa')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Santalum album</td>
+                    <td><a href="#" onclick="openModal('Santalum album')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Sapindus mukorossi</td>
+                    <td><a href="#" onclick="openModal('Sapindus mukorossi')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Scirpus articulatus</td>
+                    <td><a href="#" onclick="openModal('Scirpus articulatus')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Shorea robusta</td>
+                    <td><a href="#" onclick="openModal('Shorea robusta')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Sida cordifolia</td>
+                    <td><a href="#" onclick="openModal('Sida cordifolia')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Smilax china</td>
+                    <td><a href="#" onclick="openModal('Smilax china')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Solanum surattense</td>
+                    <td><a href="#" onclick="openModal('Solanum surattense')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Strychnos nux-vomica</td>
+                    <td><a href="#" onclick="openModal('Strychnos nux-vomica')">View Details</a></td>
+                </tr>
+                <tr data-plant="S">
+                    <td>Symplocos racemosa</td>
+                    <td><a href="#" onclick="openModal('Symplocos racemosa')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Tacca palmata</td>
+                    <td><a href="#" onclick="openModal('Tacca palmata')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Tephrosia purpurea</td>
+                    <td><a href="#" onclick="openModal('Tephrosia purpurea')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Thespesia populnea</td>
+                    <td><a href="#" onclick="openModal('Thespesia populnea')">View Details</a></td>
+                </tr>
+                <tr data-plant="T">
+                    <td>Tragia involucrata</td>
+                    <td><a href="#" onclick="openModal('Tragia involucrata')">View Details</a></td>
+                </tr>
+                <tr data-plant="U">
+                    <td>Uraria picta</td>
+                    <td><a href="#" onclick="openModal('Uraria picta')">View Details</a></td>
+                </tr>
+                <tr data-plant="V">
+                    <td>Vanda tessellata</td>
+                    <td><a href="#" onclick="openModal('Vanda tessellata')">View Details</a></td>
+                </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        © <strong>Vinay Adithya Suresh</strong>
+        <strong>Hindustan Institute of Technology and Science</strong>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="plantTitle"></h2>
+            <p id="plantDetails"></p>
+        </div>
+    </div>
+
+    <script>
+	       /* async function fetchPlantData(plantName, category) {
+            try {
+                const fileName = `data_${category}.json`;
+                const response = await fetch(fileName);
+                const data = await response.json();
+                return data[plantName] || "No additional data available.";
+            } catch (error) {
+                return "Error fetching plant details.";
+            }
+        }*/
+		
+		async function fetchPlantData(plantName) {
+			return plantData[plantName];
+		}
+		
+		const plantData = {
+			"Aegle marmelos": "Aegle marmelos (Indian Bael)\nRank Classification\nKingdom:  Plantae\nPhylum: Tracheophyta\nClass: Magnoliopsida\nOrder: Sapindales\nFamily: Rutaceae\nGenus: Aegle\nSpecies: Aegle marmelos\n\nCommon name: Bael Tree\n\nVernacular name: Bael,Sirphal(Hin);Bilva patra mara(kan);Maredu(Tel);Bilva(San)\n\nThis species is well-known for its medicinal and nutritional properties, commonly used in Ayurveda.\n\nAegle marmelos, commonly known as Bael, has been the subject of several genomic studies, resulting in valuable data for research and application. Below is a summary of the key genomic resources available:\n\n1. Whole Genome Assemblies\nAegle marmelos cv. AEG Genome v1.0: This assembly, conducted by Huazhong Agricultural University, utilized PacBio and Nanopore sequencing technologies. The genome size is approximately 276 Mb, organized into 143 scaffolds with an N50 of 16,833,768 bp. The assembly includes 28,519 annotated genes and 45,573 predicted transcripts. The data is accessible through the Citrus Genome Database.\n\nDraft Genome Assembly: Another draft genome assembly of Aegle marmelos was performed using Nanopore sequencing with a coverage of 150x. This assembly is available in the Genome Warehouse under accession number GWHBKHK01000000 (Xu Qiang et al., 2023).\n\n2. Chloroplast Genome\nComplete Chloroplast Genome: Researchers have sequenced the complete chloroplast genome of Aegle marmelos, which spans 144,538 bp with a GC content of 38.9% (V.D Nilesh et al 2012). The genome comprises 114 genes, including 75 protein-coding genes, 31 tRNA genes, and 8 rRNA genes. This data provides insights into the phylogenetic relationships within the Rutaceae family.\n\n3. Transcriptome Data\nLeaf Transcriptome Analysis: A comprehensive transcriptome analysis of Aegle marmelos leaves generated approximately 115.92 million high-quality paired-end reads. This dataset offers valuable information on gene expression profiles and can aid in functional genomics studies.\n\nThese genomic resources collectively enhance our understanding of Aegle marmelos at the molecular level, facilitating research in areas such as phylogenetics, functional genomics, and conservation biology."
+            "Andrographis paniculata": "Andrographis paniculata\nRank  Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder: Lamiales\nFamily: Acanthaceae\nGenus: Andrographis\nSpecies: Andrographis paniculata\n\n Common name: Creat\n\n Vernacular name: Kalpanath,Charayata(Hin);Nelamburu,Kirath kaddi(kan);Siriyanangai(Tam)\n\nThis species is well known for its medicinal properties,especially in ayurveda and Traditional chinese medicine,due to its active compound Andrographolide,which has anti-inflamatory,antiviral and immunomodulatory properties.\n\n Andrographis paniculata, commonly known as King of Bitters or Kalmegh  has been the focus of several genomic studies due to its medicinal significance.\n\n Chromosome-Level Assembly: Researchers have developed a high-quality reference genome for A. paniculata using PacBio single-molecule real-time sequencing and Illumina sequencing for error correction. The assembled genome is approximately 284 Mb in size, with a contig N50 of 5.14 Mb. The assembly was further organized into 24 pseudo-chromosomes utilizing Hi-C technology.\n\n Draft Genome Assembly: An earlier draft genome assembly reported a size of approximately 269 Mb, with a contig N50 of 388 Kb. This assembly provided foundational insights into the genome structure of A. paniculata.\n\n Gene Annotation and Functional Studies:\n\n NCBI Annotation Release 100: The National Center for Biotechnology Information (NCBI) has provided an annotation release for A. paniculata, detailing gene structures, transcripts, and proteins. This resource is essential for researchers focusing on gene function and expression.",
+            "Asparagus racemosus": "Asparagus racemosus\nRank  Classification\nKingdom: Plantae\nClass: Liliopsida\nOrder: Asparagales\nGenus: Asparagus\nSpecies: Asparagus racemoses\n\n Asparagus racemosus, commonly known as shatavari, is a climbing shrub native to regions spanning from Africa through southern Asia, including the Indian subcontinent, to northern Australia. It thrives in gravelly, rocky soils at elevations of 1,300–1,400 meters.\n\n\Genomic Data:\n\nAs of now, a complete genome sequence for Asparagus racemosus has not been published. However, recent studies have made significant progress in understanding its genetic makeup. A de novo sequencing and assembly effort has identified 25,991 unigenes in A. racemosus, with 23,966 of these showing homology to known proteins. These unigenes have been categorized into various functional groups, including those involved in secondary metabolism, which is crucial for the plant's medicinal properties.\nAdditionally, research on related species, such as Asparagus officinalis (garden asparagus), has provided insights into the Asparagus genus's genomic structure. The mitochondrial genome of A. officinalis has been sequenced, revealing rich sequence variation that could inform future studies on A. racemosus.\n\nThese advancements in genomic research are paving the way for a more comprehensive understanding of Asparagus racemosus, which could enhance its medicinal applications and conservation strategies",
+            "Bacopa monnieri": "Bacopa monnieri\nRank  Classification\nKingdom: Plantae\nClass:Asterids\nOrder: Lamiales\nFamily: Plantaginaceae\nGenus: Bacopa\nSpecies: Bacopa monnieri\n\nThis classification places Bacopa monnieri within the Plantaginaceae family, known for its medicinal and aquatic plant species.Bacopa monnieri, commonly known as Brahmi, is a medicinal herb traditionally used in Ayurvedic medicine. While a complete genome sequence for B. monnieri is not yet available, several studies have explored its genetic composition through transcriptome analyses and molecular marker techniques.\n\nTranscriptome Analysis:\n\nResearchers have performed transcriptome sequencing on B. monnieri to understand its gene expression profiles:\n\nA study sequenced cDNA libraries from shoot and root tissues using the Illumina HiSeq 2000 system, yielding approximately 24 million raw reads per tissue. After quality filtering, 22 million reads per tissue were assembled, resulting in 26,412 annotated genes in roots and 18,500 in shoots. This analysis provides insights into the enzymes involved in secondary metabolite pathways.\n\nAnother investigation identified microRNAs (miRNAs) in B. monnieri using transcriptome data. Despite the absence of a complete genome sequence, the study utilized expressed sequence tag (EST) analysis to discover conserved miRNAs, contributing to the understanding of gene regulation in this species.",
+            "Boerhavia diffusa": "Boerhavia diffusa\nRank  Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder: Caryophyllales\nFamily: Nyctaginaceae\nGenus: Boerhavia\nSpecies: Boerhavia diffusa L.\n\nGenome Data:\n\nAs of now, a complete genome sequence for Boerhavia diffusa has not been published. However, research efforts have focused on its genetic characterization.\n\nTranscriptome Sequencing: Studies have employed RNA sequencing to analyze gene expression patterns in B. diffusa, providing insights into its medicinal properties and metabolic pathways.\n\nMolecular Markers: Techniques such as Random Amplified Polymorphic DNA (RAPD) and Inter Simple Sequence Repeats (ISSR) have been utilized to assess genetic diversity within B. diffusa populations, aiding in conservation and breeding programs.\n\nThese genomic studies contribute to understanding the genetic basis of the plant's therapeutic properties and support its sustainable use in traditional medicine.",
+            "Cassia fistula": "Cassia fistula\nRank classification\nKingdom: Plantae\nClass: Rosids\nOrder: Fabales\nFamily: Fabaceae\nGenus: Cassia\nSpecies: Cassia fistula\n\nGenome Data:\n\nAs of now, a complete genome sequence for Cassia fistula has not been published. However, certain genetic studies have been conducted.\n\nMolecular Phylogenetics: Research involving molecular phylogenetic analysis has been conducted to understand the evolutionary relationships within the Cassia genus and its related taxanomy\n\nThese studies contribute to a better understanding of the genetic makeup and evolutionary history of Cassia fistula, supporting its classification and potential applications in horticulture and medicine.",
+            "Centella asiatica": "Centella asiatica\nRank  Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder: Apiales\nFamily: Apiaceae\nGenus: Centella\nSpecies: Centella asiatica\n\nGenome Sequencing and Assembly:\n\nA telomere-to-telomere (T2T) genome assembly of C. asiatica has been achieved, revealing a genome size of approximately 438.12 Mb with a contig N50 length of 54.12 Mb. This assembly identified 25,200 protein-coding genes and highlighted a single whole-genome duplication event specific to the Apiaceae family. Notably, the study uncovered significant expansions in gene families related to triterpenoid saponin biosynthesis, compounds responsible for the plant's medicinal properties.\n\nGenomic microsatellite markers analyzed 80 accessions from southern India, revealing considerable genetic diversity and a significant intra-population variation. The findings suggest predominant inbreeding and population differentiation in C. asiatica",
+            "Clerodendrum serratum": "Clerodendrum serratum\nRank Classification\nKingdom: Plantae\nClass: Asterids\nOrder: Lamiales\nFamily: Lamiaceae\nGenus: Clerodendrum\nSpecies: Clerodendrum serratum.\n\nGenome Data:\n\nAn investigation into the genetic diversity and population structure of C. serratum was conducted using CAAT box-derived polymorphism (CBDP), inter primer binding site (iPBS), and start codon targeted (SCoT) markers. The study revealed a moderately high gene flow (Nm = 1.133) and low differentiation (Gst = 0.310) among populations. Analysis of molecular variance (AMOVA) indicated higher genetic variation (66%) within populations than among them (34%). STRUCTURE and GENELAND analyses identified five and two genetic pools, respectively, suggesting a complex genetic structure within the species.\n\nEight species of Clerodendrum from Northeast India were characterized, and their molecular phylogeny was constructed using the ITS2 region of nuclear DNA as a molecular marker. The consensus ITS sequence lengths varied from 641 bp in Clerodendrum colebrookianum to 692 bp in C. inerme, with an average of 666 bp. This analysis aids in understanding the evolutionary relationships among Clerodendrum species.",
+            "Cissus quadrangularis": "Cissus quadrangularis\nRank Classification\nKingdom: Plantae\nClass: Eudicots\nOrder: Vitales\nFamily: Vitaceae\nGenus: Cissus\nSpecies: Cissus quadrangularis\n\nGenome Data:\n\nA high-quality genome assembly of C. quadrangularis has been achieved, revealing a genome size of approximately 679.2 Mb. This assembly identified 51,857 protein-coding genes, with approximately 47.75% of the genome comprising repetitive sequences. The species exhibits tetraploidy, with the genome phased into two subgenomes. Notably, the succulent stems of C. quadrangularis utilize the Crassulacean acid metabolism (CAM) pathway, while the leaves perform C3 photosynthesis, highlighting its adaptation to arid environments.\n\nThe complete chloroplast genome of C. quadrangularis has been sequenced, totaling 160,404 base pairs. This genome comprises a large single-copy region (88,987 bp), a small single-copy region (18,621 bp), and a pair of inverted repeat regions (26,398 bp each). This data is valuable for species identification and phylogenetic studies within the Vitaceae family.\n\nCollectively, these genetic and sequence data enhance our understanding of C. quadrangularis's genomic architecture, adaptive features, and genetic diversity, facilitating conservation efforts and the development of improved cultivars with enhanced medicinal properties.",
+            "Costus speciosus": "Costus speciosus\nRank Classification\nKingdom: Plantae\nClass:Lilliopsida\nOrder: Zingiberales\nFamily: Costaceae\nGenus: Cheilocostus\nSpecies: Cheilocostus speciosus\n\nGenome Data:\n\nA comprehensive analysis of the chloroplast genomes within the Costaceae family, which includes Costus speciosus, has been conducted. This study characterized the complete chloroplast genome structures and variations, offering valuable data for phylogenetic analyses and divergence time estimation within the family.\n\nAn analysis of wild populations from the Western Ghats, Eastern Ghats, and Andaman and Nicobar Islands using Single Primer Amplification Reaction (SPAR) markers revealed patterns linked to allopolyploidy and biogeography.",
+            "Curculigo orchioides": "Curculigo orchioides\nRank Classification\nKingdom: Plantae\nClass:Lilliopsida\nOrder:Asparagales\nFamily: Hypoxidaceae\nGenus:Curculigo\nSpecies:Curculigo orchioides\n\nCommon name: Yellow Groundstar\n\nVernacluar name: Talamuli(San);Kaalimusli(Hin)Nela taale gaddi(Kan)\n\n Curcilgo orchioides is a medicinal herb belonging to the family Hypoxidaceae.It is used as an aphrodisiac,adaptogen and immune booster for humans\n\n Genome data: Curculigo orchioides has been the subject of various genetic studies, particularly focusing on its chloroplast genome.in 2020, researchers succesfully sequenced its complete chloroplast genome illumina sequencing technology. the finding revealed that the genome is 155,510 base pairs in length and exhibits a typical quadripartite structure, which is characteristic of most angiospers. This structures includes a large single-copy region,a small single-copy region, and two inverted repeat regions. The study also conducted phylogentic analysis positioning curculigo orchides within the Hypoxidaceae family.",
+            "Curcuma longa": "Curcuma longa\nRank Classification\nkingdom: Plantae\nClass: Lilliopsida\nOrder: Zingiberales\nFamily: Zingiberaceae\nGenus:Curucuma\nSpecies:Curcuma longa\n\nCommon name: Turmeric Ginger\n\n Vernacular name: Harida(San);Haldi(Hin);Arishna(Kan)\n\nCurcuma longa a key spice in Indian Culture used for flavour and color. this contains curcumin,known for its anti-inflammatory,antioxidant,and antimicrobial properties.\n\n Genome studies have focused on its genetic diversity and secondary metabolite pathways.\n\n Genome data: Researchers contructed a draft genome sequence of curcuma longa using 10x genomics linked reads. This study marked the first sequencing of a species from the zingiberaceae family and provided insights into the genomic basis of turmeric's medicinal properties.\n\nA most recent study has achieved a chromosome-scale genome assembly of curcuma longa by integrating PacBio long reads,illumina short reads, and Hi-C sequencing technologies. This comprehensive assembly offers valuable insights into the Biosynthesis of curcumin and other secondary metabolites, as well ass the genetics mechanisms underlying tuber development.\n\n The complete chloroplast genome of curcuma longa has been sequenced and annotated revealing a genome length of 162,255 base pairs. The chloroplast genome data is essential for phylogenetic studies and understanding the evolutinary relationships within the zingiberaceae family.",
+            "Datura metel": "Datura metel\nRank Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder: Solanales\nFamily: Solanaceae\nGenus: Datura\nSpecies: Datura metel\n\nCommon name: Angel's Trumpet,Thorn Apple\n\nVernacular name: Dhusturah(San);Dhattura(Hin);Daturi Ummati (Kan)\n\nDatura metel has been used in traditional medicine for various purposes but it is highly toxic and must be used with caution. some of its medicinal uses include Asthma and RespiratoryIssues,Sedatives and Antispasmodic.\n\nGenome data: As of now a complete genome sequence data for datura metel has not been published. However related genetic studies have been conducted sequencing of leaf,salicylic-induced leaf,and flower tissues from Datura metel was performed.\n\n The raw sequencing data are available under 'Bioproject accession number PRJNA838784 this is available in NCBI Sequence read archieve.\n\n The complete chloroplast sequence of Datura metel is performed and has been published that the genome is 155,871 base pairs in lenght and contains 113 unique genes,including 80 protien-coding genes,29 tRNAs,and four rRNAs.",
+            "Emblica officinalis": "Emblica officinalis\nRank Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder: Malpighiales\nFamily: Phyllanthaceae\nGenus: Phyllanthus\nspecies: Emblica officinalis\n\n Emblica officinalis also known as indian gooseberry is a medicinal plant widely used in ayurveda.It belongs to the phyllanthacea family and is native to india and southeast asia.\n\n Genome Data: In a recent study, researchers performed the first genome sequencing of this species using 10x Genomics and Oxford Nanopore Technology. The draft genome assembly was approximately 519 megabase pairs (Mbp) in size, comprising 4,384 contigs with an N50 of 597 kilobase pairs (Kbp). The assembly exhibited a high level of completeness, with a Benchmarking Universal Single-Copy Orthologs (BUSCO) score of 98.4%, and identified 37,858 coding sequences.\n\nPrior to this, transcriptome analyses were conducted to explore specific biosynthesis pathways in P. emblica. For instance, a study using the Illumina HiSeq 2000 platform generated 31,285,965 high-quality reads, which were assembled into 91,288 contigs with an N50 value of 358 base pairs (bp).",
+            "Erythrina variegata": "Erythrina variegata\nRank Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder: Fables\nFamily Fabaceae\nGenus:Erythrina\nspecies: Erythrina variegata\n\n Erythrina variegata is used in Ayurveda, Unani, and folk medicine for treating fever, inflammation, and respiratory disorders. Leaves and bark contain bioactive compounds effective against bacterial and fungal infections. Studies suggest liver-protective effects due to antioxidant properties.Anti-diabetic Potential hypoglycemic effects beneficial for managing diabetes.\n\nGenome data:Genome sequencing data for Erythrina variegata is limited compared to major crop plants. However, transcriptome studies and phylogenetic analyses have been conducted for the Erythrina genus\n\nAs of now, the complete nuclear genome sequence of Erythrina variegata has not been published. However, the chloroplast genome has been sequenced and analyzed. The chloroplast genome is approximately 159,927 base pairs in length and exhibits a typical quadripartite structure, comprising a large single-copy (LSC) region, a small single-copy (SSC) region, and two inverted repeats (IRs). It contains a total of 130 genes, including 85 protein-coding genes, 37 transfer RNA (tRNA) genes, and 8 ribosomal RNA (rRNA) genes.Comparative genomic analyses among four Erythrina species have revealed both similarities and differences in genome size, structure, GC content, and gene content. These studies enhance our understanding of the evolutionary relationships within the Erythrina genus and provide valuable insights into the genetic makeup of Erythrina variegata.",
+            "Evolvulus alsinoides": "Evolvulus alsinoides\nRank Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder: Solanales\nFamily: Convolvulacaea\nGenus: Evolvulus\nSpecies: Evolvulus alsinoides\n\nEvolvulus alsinoides is a small flowering plant from the Convolvulaceae family, commonly known as dwarf morning glory or Shankhpushpi. It is a prostrate or spreading herb found in tropical and subtropical regions. Known for its medicinal properties, especially in Ayurveda, it is used as a brain tonic and for improving memory and cognitive functions. \n\nIt is a medicinal herb widely used in Ayurveda and traditional medicine for its neuroprotective and cognitive-enhancing properties.\n\nGenome Data: Researchers have sequenced and analyzed the complete chloroplast genome of E. alsinoides, revealing a genome size of 157,015 base pairs. This genome comprises 114 unique genes, including 80 protein-coding genes, 30 transfer RNA (tRNA) genes, and 4 ribosomal RNA (rRNA) genes. The study identified 69 RNA editing sites and 44 simple sequence repeats (SSRs), which can serve as molecular markers for species identification and genetic studies. Phylogenetic analysis indicated that E. alsinoides is closely related to the genus Cressa, with some divergence from the genus Ipomoea.\n\nThe complete mitochondrial genome of E. alsinoides has also been sequenced, revealing a length of 344,184 base pairs. It contains 46 unique coding genes, including 31 protein-coding genes, 12 tRNA genes, and 3 rRNA genes. Notably, the study found that 11 protein-coding genes are under purifying selection, indicating their conserved nature. Comparative analyses demonstrated significant gene rearrangements within the order Solanales, with E. alsinoides exhibiting a highly rearranged gene order compared to related species.",
+            "Ficus religiosa": "Ficus religiosa\nRank Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder Rosales\nFamily: Moraceae\nGenus: Ficus\nSpecies: Ficus religiosa\n\n Ficus religiosa, commonly known as the sacred fig or Peepal tree, belongs to the Moraceae family. It is a large, long-lived tree native to the Indian subcontinent and is considered sacred in Hinduism and Buddhism.\n\n The tree has cultural, religious, and medicinal significance, with its leaves, bark, and roots used in traditional medicine.\n\nThe genome sequencing data of Ficus religiosa is still limited, but some studies have explored its genetic composition for evolutionary, medicinal, and ecological insights. As a member of the Moraceae family, its genome is expected to share characteristics with other Ficus species. Research has primarily focused on its chloroplast genome, phylogenetics, and medicinal properties. For specific genome assemblies, transcriptomic data, or genetic markers, databases such as NCBI GenBank, Ensembl Plants, and Phytozome can be useful resources. Further sequencing efforts could provide deeper insights into its medicinal compounds, stress tolerance, and evolutionary history.\n\nMolecular sequencing techniques, such as rbcL, matK, ITS, and trnH-psbA markers, have been used for DNA barcoding and phylogenetic analysis of Ficus religiosa. These molecular markers are crucial for species identification, evolutionary studies, and conservation genetics. High-throughput sequencing and whole-genome approaches are gradually being applied to study genetic variation, adaptive traits, and the medicinal properties of Ficus religiosa.",
+            "Gymnema sylvestre": "Gymnema sylvestre\nRank Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder Rosales\nFamily: Apocynaceae\nGenus: Gymnema\n species: Gymnema sylvestre\n\n This plant is know for its mecical properties particularly for its ability to suppressn sweetness and help manage diabetes.it is native to tropical forest of India,Africa,Australia.\n\n Genome Data:\n\nA significant study employed RNA sequencing technology to investigate the functional gene profile of G. sylvestre. This de novo assembly yielded 23,126 unigenes, with 18,116 annotated against databases such as NCBI nr, Gene Ontology (GO), KEGG, and UniProt. Notably, 111 unigenes were associated with enzymes involved in terpenoid biosynthesis, including compounds like Vitamin E, beta-amyrin, and squalene. Additionally, the study identified 1,428 simple sequence repeats (SSRs) and predicted eight putative long non-coding RNAs (lncRNAs), which may play roles in regulating essential biological processes in G. sylvestre.\n\nGenomic SSR Markers: Researchers have developed novel genomic SSR markers to assess the genetic diversity of G. sylvestre. In one study, 58 primer pairs produced alleles ranging from two to seven per locus, demonstrating the utility of these markers in genetic studies and conservation efforts.\n\nGene Characterization: The squalene synthase (SQS) gene, pivotal in the biosynthesis of triterpenoids, has been characterized in G. sylvestre. A coding DNA sequence (CDS) of 1,245 bp was identified from transcriptome data. Further analysis revealed that the genomic DNA sequence of this gene contains two introns of 101 and 164 bp, respectively. Phylogenetic studies indicated that the GS-SQS gene in G. sylvestre is closely related to those in Coffea arabica and Gardenia jasminoides.\n\nThese genomic insights provide a foundational understanding of G. sylvestre's genetic architecture, facilitating future research into its medicinal properties and aiding in the conservation and sustainable utilization of this valuable plant species.",
+            "Hemidesmus indicus": "Hemidesmus indicus\nRank Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder: Gentianales\nFamily: Apocynaceae\nGenus: Hemidesmus\n Species: Hemidesmus indicus\n\n This plant, commonly known as indian Saraparilla, is widely used in traditional medicine, especially in ayurveda for its medicinal properties.\n\nGenome Data:\n\n As of now a complete genome sequence for Hemidesmus indicus has not published.However several studies have explored its genetic makeup using various molecular techniques.\n\nResearchers have employed genome skimming methods using platform like MinION to analyze the genetic material of Hemidesmus indicus. This approach facilitates the rapid sequencing of high-copy DNA region, aiding in species identification and quality assesment of herbal products.\n\nRandomly Amplified Polymorphic DNA (RAPD) analysis has been utilized to access the genetic diversity amaong different accessions of H.indicus. This technique helps in understanding the genetic relationships and variations within the species.\n\nGene Sequences: Specific gene sequences from H. indicus have been cataloged in databases like UniProt. For instance, the chloroplastic ATP synthase subunit beta (atpB) gene has been sequenced, providing insights into particular genetic components of the plant.",
+            "Holarrhena antidysenterica": "Holarrhena antidysenterica\nRank Classification\nKingdom: Plantae\nClass: Magnoliopsida\nOrder: Gentianales\nFamily: Apocynaceae\nGenus: Holar"
+	    };
+		
+        async function openModal(name, details) {
+            document.getElementById("plantTitle").innerText = name;
+            document.getElementById("plantDetails").innerText = "Loading...";
+
+            const fullDetails = await fetchPlantData(name);
+            document.getElementById("plantDetails").innerText = fullDetails;
+
+            document.getElementById("modal").style.display = "block";
+            document.getElementById("modalOverlay").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function filterPlants(letter) {
+            let rows = document.querySelectorAll("#plantTable tbody tr");
+            rows.forEach(row => {
+                if (row.dataset.plant === letter) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        function resetFilter() {
+            document.querySelectorAll("#plantTable tbody tr").forEach(row => row.style.display = "");
+        }
+    </script>
+
+
+<script>
+    function searchPlants() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let rows = document.querySelectorAll("#plantTable tbody tr");
+
+        rows.forEach(row => {
+            let plantName = row.cells[0].innerText.toLowerCase();
+            row.style.display = plantName.includes(input) ? "" : "none";
+        });
+    }
+</script>
+</body>
+</html>
